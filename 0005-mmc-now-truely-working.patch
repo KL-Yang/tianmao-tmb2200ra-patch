@@ -1,0 +1,25 @@
+From bd9d7b195b022c75a5d97fe7c358d633c4d18bee Mon Sep 17 00:00:00 2001
+From: YangKunlun <YangKunlun@gmail.com>
+Date: Tue, 30 Jun 2015 07:19:52 +0800
+Subject: [PATCH 5/6] mmc now truely working
+
+---
+ arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+index 081bb07..2b39566 100644
+--- a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
++++ b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+@@ -19,7 +19,7 @@
+ 			pinctrl-0 = <&mmc0_pins_a>, <&mmc0_cd_tmb2200ra>;
+ 			vmmc-supply = <&reg_vcc3v0>;
+ 			bus-width = <4>;
+-			cd-gpios = <&pio 0 4 GPIO_ACTIVE_HIGH>; /* PA4 */
++			cd-gpios = <&pio 0 4 0>; /* PA4 */
+ 			cd-inverted;
+ 			status = "okay";
+ 		};
+-- 
+2.1.4
+

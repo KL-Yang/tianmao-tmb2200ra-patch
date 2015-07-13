@@ -1,0 +1,25 @@
+From 5d9073141ef4b1bbd9da0c9c8ab89529b32f60b1 Mon Sep 17 00:00:00 2001
+From: YangKunlun <yangkunlun@gmail.com>
+Date: Fri, 3 Jul 2015 23:15:33 +0800
+Subject: [PATCH 6/6] update emmc bus width to 8
+
+---
+ arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+index 2b39566..f2ae71a 100644
+--- a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
++++ b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+@@ -27,7 +27,7 @@
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&mmc2_pins_a>;
+ 			vmmc-supply = <&reg_vcc3v3>;
+-			bus-width = <4>;
++			bus-width = <8>;
+ 			non-removable;
+ 			status = "okay";
+ 		};
+-- 
+2.1.4
+

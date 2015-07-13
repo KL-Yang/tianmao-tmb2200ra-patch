@@ -1,0 +1,59 @@
+From d37ee54c6b4c6e89aea823cd5ce02814f3c9b206 Mon Sep 17 00:00:00 2001
+From: root <root@mele-a200>
+Date: Sun, 28 Jun 2015 19:29:24 +0800
+Subject: [PATCH 2/6] external usb now working
+
+---
+ arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+index f11c986..2f2c329 100644
+--- a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
++++ b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+@@ -2,6 +2,9 @@
+ #include "sun6i-a31s.dtsi"
+ #include "sunxi-common-regulators.dtsi"
+ 
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/pinctrl/sun4i-a10.h>
++
+ / {
+ 	model = "TianMao MagicBox TMB2200RA";
+ 	compatible = "tianmao,tmb2200ra", "allwinner,sun6i-a31s";
+@@ -30,6 +33,7 @@
+ 		};
+ 
+ 		usbphy: phy@01c19400 {
++            usb1_vbus-supply = <&reg_usb1_vbus>;
+ 			status = "okay";
+ 		};
+ 
+@@ -42,13 +46,6 @@
+ 		ehci1: usb@01c1b000 {
+ 			status = "okay";
+         };
+-		ohci1: usb@01c1b400 {
+-			status = "okay";
+-        };
+-		ohci2: usb@01c1c400 {
+-			status = "okay";
+-        };
+-
+ 		gmac: ethernet@01c30000 {
+ 			pinctrl-names = "default";
+ 			pinctrl-0 = <&gmac_pins_mii_a>;
+@@ -83,3 +80,10 @@
+ 		};
+ 	};
+ };
++
++&reg_usb1_vbus {
++	gpio = <&pio 2 27 GPIO_ACTIVE_HIGH>; /* PC27 */
++	status = "okay";
++};
++
++
+-- 
+2.1.4
+

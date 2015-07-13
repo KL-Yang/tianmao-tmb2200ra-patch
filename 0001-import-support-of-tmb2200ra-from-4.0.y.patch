@@ -1,0 +1,119 @@
+From 849f926a4b4a65736e86e6b8c937ebb6bb86088b Mon Sep 17 00:00:00 2001
+From: YangKunlun <yangkunlun@gmail.com>
+Date: Sat, 27 Jun 2015 23:15:47 +0800
+Subject: [PATCH 1/6] import support of tmb2200ra from 4.0.y
+
+---
+ arch/arm/boot/dts/Makefile                 |  3 +-
+ arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts | 85 ++++++++++++++++++++++++++++++
+ 2 files changed, 87 insertions(+), 1 deletion(-)
+ create mode 100644 arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 992736b..f1a58f4 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -546,7 +546,8 @@ dtb-$(CONFIG_MACH_SUN6I) += \
+ 	sun6i-a31-colombus.dtb \
+ 	sun6i-a31-hummingbird.dtb \
+ 	sun6i-a31-m9.dtb \
+-	sun6i-a31s-cs908.dtb
++	sun6i-a31s-cs908.dtb \
++	sun6i-a31s-tmb2200ra.dtb
+ dtb-$(CONFIG_MACH_SUN7I) += \
+ 	sun7i-a20-bananapi.dtb \
+ 	sun7i-a20-bananapro.dtb \
+diff --git a/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+new file mode 100644
+index 0000000..f11c986
+--- /dev/null
++++ b/arch/arm/boot/dts/sun6i-a31s-tmb2200ra.dts
+@@ -0,0 +1,85 @@
++/dts-v1/;
++#include "sun6i-a31s.dtsi"
++#include "sunxi-common-regulators.dtsi"
++
++/ {
++	model = "TianMao MagicBox TMB2200RA";
++	compatible = "tianmao,tmb2200ra", "allwinner,sun6i-a31s";
++
++	chosen {
++		bootargs = "earlyprintk console=ttyS0,115200";
++	};
++
++	soc@01c00000 {
++		mmc0: mmc@01c0f000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&mmc0_pins_a>, <&mmc0_cd_pin_primo81>;
++			vmmc-supply = <&reg_vcc3v0>;
++			bus-width = <4>;
++			cd-gpios = <&pio 0 4 0>; /* PA8 should be PA4!!! */
++			cd-inverted;
++			status = "okay";
++		};
++		mmc2: mmc@01c11000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&mmc2_pins_a>;
++			vmmc-supply = <&reg_vcc3v3>;
++			bus-width = <4>;
++			non-removable;
++			status = "okay";
++		};
++
++		usbphy: phy@01c19400 {
++			status = "okay";
++		};
++
++		ehci0: usb@01c1a000 {
++			status = "okay";
++		};
++		ohci0: usb@01c1a400 {
++			status = "okay";
++        };
++		ehci1: usb@01c1b000 {
++			status = "okay";
++        };
++		ohci1: usb@01c1b400 {
++			status = "okay";
++        };
++		ohci2: usb@01c1c400 {
++			status = "okay";
++        };
++
++		gmac: ethernet@01c30000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&gmac_pins_mii_a>;
++			phy = <&phy1>;
++			phy-mode = "mii";
++			status = "okay";
++
++			phy1: ethernet-phy@1 {
++				reg = <1>;
++			};
++		};
++
++		pio: pinctrl@01c20800 {
++			mmc0_cd_pin_primo81: mmc0_cd_pin@0 {
++				allwinner,pins = "PA4";
++				allwinner,function = "gpio_in";
++				allwinner,drive = <0>;
++				allwinner,pull = <1>;
++			};
++			mmc2_pins_a: mmc2@0 {
++				allwinner,pins = "PC9","PC8","PC7","PC6","PC11","PC10";
++				allwinner,function = "mmc2";
++				allwinner,drive = <SUN4I_PINCTRL_30_MA>;
++				allwinner,pull = <SUN4I_PINCTRL_NO_PULL>;
++			};
++		};
++
++		uart0: serial@01c28000 {
++			pinctrl-names = "default";
++			pinctrl-0 = <&uart0_pins_a>;
++			status = "okay";
++		};
++	};
++};
+-- 
+2.1.4
+
